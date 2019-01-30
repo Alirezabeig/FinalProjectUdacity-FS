@@ -70,6 +70,10 @@ And I receive this message * Reloading web server apache2                       
 HOWEVER, when I go to the http://52.89.36.246/ instead of seeting my __init_.py I see  Apache2 Ubuntu Default Page
 
 
+Also when I try to connect SSH: ssh -i ~/.ssh/Users/alirezabeig/ root@52.89.36.246 : I receive this error _>Warning: Identity file /Users/alirezabeig/.ssh/Users/alirezabeig.rsa not accessible: No such file or directory.
+root@52.89.36.246: Permission denied (publickey).
+MY PWD is :/Users/alirezabeig/final project
+
 
 
 
