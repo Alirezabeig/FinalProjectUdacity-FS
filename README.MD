@@ -80,9 +80,9 @@ MY PWD is :/Users/alirezabeig/final project
 Add user: 
 
 Sudo adduser grader
-password: sss
+password: qwerasdzx
 
-
+One error I receive after running :  ssh grader@52.89.36.246 -p 2222  --> It times out! 
 
 
 
