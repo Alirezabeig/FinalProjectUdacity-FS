@@ -64,7 +64,7 @@ I have done step by step actiosn from this site: https://www.digitalocean.com/co
 
 
 
-Ad the end I run the code: service apache2 reload in my terminal while I am connected to venv : (venv) vagrant@vagrant-ubuntu-trusty-64:/var/www/catalog/catalog$ service apache2 reload 
+At the end I run the code: service apache2 reload in my terminal while I am connected to venv : (venv) vagrant@vagrant-ubuntu-trusty-64:/var/www/catalog/catalog$ service apache2 reload 
 And I receive this message * Reloading web server apache2                                                                                       * 
 
 HOWEVER, when I go to the http://52.89.36.246/ instead of seeting my __init_.py I see  Apache2 Ubuntu Default Page
