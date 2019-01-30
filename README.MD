@@ -77,6 +77,12 @@ root@52.89.36.246: Permission denied (publickey).
 MY PWD is :/Users/alirezabeig/final project
 
 
+Add user: 
+
+Sudo adduser grader
+password: sss
+
+
 
 
 
