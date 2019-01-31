@@ -96,6 +96,8 @@ ssh-keygen -t rsa
 
 Where the public key is ---/home/vagrant/.ssh/Final_P.rsa
 
-
+Where the error happens :
+run this command : ssh -i ~/.ssh/Final_P.rsa root@52.89.36.246
+Error:Permission denied (publickey).
 
 
