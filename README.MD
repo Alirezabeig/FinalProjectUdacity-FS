@@ -29,7 +29,7 @@ I have this directory
                                    sys.path.insert(0,"/var/www/catalog/")
 
                                    from catalog import app as application
-                                   application.secret_key = '172.26.10.105'
+                                   application.secret_key = 'SuperSecretKEY'
 
 
         
