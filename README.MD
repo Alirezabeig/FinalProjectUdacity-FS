@@ -89,6 +89,13 @@ password: qwerasdzx
 
 One error I receive after running :  ssh grader@52.89.36.246 -p 2222  --> It times out! 
 
+Create : To create the public and private SSH keys on the command-line:
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+ssh-keygen -t rsa
+
+Where the public key is ---/home/vagrant/.ssh/Final_P.rsa
+
 
 
 
