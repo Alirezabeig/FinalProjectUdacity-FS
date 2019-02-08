@@ -10,26 +10,7 @@ I have this directory
 
         /var/www/catalog includes--> catalog  & flaskapp.wsgi
 
-                  /var/www/catalog/catalog  includes:  __init__.py  static  templates  venv
-                              __init__.py
-                              from flask import Flask
-                              app = Flask(__name__)
-                              @app.route("/")
-                              def hello():
-                                    return "Hello, I love Digital Ocean!"
-                              if __name__ == "__main__":
-                              app.run()
-                      
-
-                   /var/www/catalog  - > sudo nano flaskapp.wsgi: 
-                                  #!/usr/bin/python
-                                  import sys
-                                  import logging
-                                  logging.basicConfig(stream=sys.stderr)
-                                   sys.path.insert(0,"/var/www/catalog/")
-
-                                   from catalog import app as application
-                                   application.secret_key = 'SuperSecretKEY'
+                  
 
 
         
@@ -45,19 +26,27 @@ I have this directory
                   return [output]
 
 
-I also have this file: sudo nano /etc/apache2/sites-available/FlaskApp.conf
+I also have this file: sudo nano /etc/apache2/sites-available/Item_catalog-.conf
         <VirtualHost *:80>
-                ServerName 52.89.36.246
-                ServerAdmin almo7383@colorado.edu
-                WSGIScriptAlias / /var/www/catalog/catalog.wsgi
-                <Directory /var/www/catalog/catalog/>
-                        Order allow,deny
-                        Allow from all
-                </Directory>
-                ErrorLog ${APACHE_LOG_DIR}/FlaskApp-error.log
-                LogLevel warn
-                CustomLog ${APACHE_LOG_DIR}/FlaskApp-access.log combined
-        </VirtualHost>
+ServerName 54.201.251.44
+ServerAdmin almo7383@colorado.edu
+WSGIScriptAlias / /var/www/Item_catalog-/Item_catalog-.wsgi
+<Directory /var/www/Item_catalog-/Item_catalog-/>
+Order allow,deny
+Allow from all
+</Directory>
+Alias /static /var/www/Item_catalog-/Item_catalog-/static
+<Directory /var/www/Item_catalog-/Item_catalog-/static/>
+Order allow,deny
+Allow from all
+</Directory>
+ErrorLog ${APACHE_LOG_DIR}/error.log
+LogLevel warn
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+
+
 
 Have to Change SSH port from 22 to 2200
 Run sudo nano /etc/ssh/sshd_config
