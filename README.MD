@@ -1,34 +1,70 @@
-All I have done to deploy an app to the web.
 
-I have logged in to my virtualenv 
-donlowed flask - Python3 - pip3
+For this project we should deploy our app to the web. 
 
-No issue so far. 
+All I have done to deploy my app to the web using ubuntu on Amazon lightsail.
 
-I have this directory 
-/var/www/ includs : catalog and html
+IP address: 54.201.251.44
 
-        /var/www/catalog includes--> catalog  & flaskapp.wsgi
-
-                  
+Project details: 
+Prepare a linux configuraiton on a virtual machine to host your web application
+Accessible SSH port: 2200
 
 
-        
-        
-        /var/www/html : index.html  myapp.wsgi
-                  myapp.wsgi :def application(environ, start_response):
-                  status = '200 OK'
-                  output = 'Hello Udacity!'
+Create a new user:
+Sudo adduser grader
+Create a new file in the sudoers directory with sudo nano /etc/sudoers.d/grader
+Add the following text grader ALL=(ALL:ALL) ALL
+Download package lists with sudo apt-get update
+Fetch new versions of packages with sudo apt-get upgrade
+Change SSH port from 22 to 2200
+Run sudo nano /etc/ssh/sshd_config
+Change the port from 22 to 2200
 
-                  response_headers = [('Content-type', 'text/plain'), ('Content-Length', str(len(output)))]
-                  start_response(status, response_headers)
+Install Apache
+sudo apt-get install apache2
+Install mod_wsgi
 
-                  return [output]
+Run sudo apt-get install libapache2-mod-wsgi python-dev
+Enable mod_wsgi with sudo a2enmod wsgi
+Start the web server with sudo service apache2 start
 
+Install git using: sudo apt-get install git
+cd /var/www
+sudo mkdir Item_catalog-
+cd Item_catalog- 
+sudo mkdir Item_catalog- 
+Clone the Item Catalog app from my github https://github.com/Alirezabeig/Item_catalog-Github
 
-I also have this file: sudo nano /etc/apache2/sites-available/Item_catalog-.conf
-        <VirtualHost *:80>
-ServerName 54.201.251.44
+Create a catalog.wsgi file, then add this inside:
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0, "/var/www/Item_catalog-/")
+
+from Item_catalog- import app as application
+application.secret_key = 'supersecretkey'
+
+Rename project.py to init.py mv project.py __init__.py
+Install virtual environment
+Install the virtual environment sudo pip install virtualenv
+Create a new virtual environment with sudo virtualenv venv
+Activate the virutal environment source venv/bin/activate
+Change permissions sudo chmod -R 777 venv
+Install Flask and other dependencies
+Install pip with sudo apt-get install python-pip
+Install Flask pip install Flask
+Install other project dependencies sudo pip install httplib2 oauth2client sqlalchemy psycopg2 sqlalchemy_utils
+Update path of client_secrets.json file
+
+nano __init__.py
+Change client_secrets.json path to /var/www/Item_catalog-/Item_catalog-/client_secrets.json
+Configure and enable a new virtual host
+Run this: sudo nano /etc/apache2/sites-available/Item_catalog-.conf
+
+   ----------
+   
+Hee is my Conf file: <VirtualHost *:80>
+ServerName mywebsite.com
 ServerAdmin almo7383@colorado.edu
 WSGIScriptAlias / /var/www/Item_catalog-/Item_catalog-.wsgi
 <Directory /var/www/Item_catalog-/Item_catalog-/>
@@ -46,47 +82,29 @@ CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 
 
+Enable the virtual host sudo a2ensite catalog
 
+Install and configure PostgreSQL
+sudo apt-get install libpq-dev python-dev
+sudo apt-get install postgresql postgresql-contrib
+sudo su - postgres
+psql
 
-Have to Change SSH port from 22 to 2200
-Run sudo nano /etc/ssh/sshd_config
-Change the port from 22 to 2200
+CREATE USER catalog WITH PASSWORD 'password';
+ALTER USER catalog CREATEDB;
+CREATE DATABASE Item_catalog- WITH OWNER catalog;
+\c Item_catalog-
+REVOKE ALL ON SCHEMA public FROM public;
+GRANT ALL ON SCHEMA public TO Item_catalog-;
+\q
+exit
+Change create engine line in your __init__.py and Database_set_Finalprject.py to: engine = create_engine('postgresql://Item_catalog-:password@localhost/Item_catalog-')
+python /var/www/Item_catalog-/Item_catalog-/Database_set_Finalproject.py
 
-
-
-I have done step by step actiosn from this site: https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps#step-four-%E2%80%93-configure-and-enable-a-new-virtual-host
-
-
-
-At the end I run the code: service apache2 reload in my terminal while I am connected to venv : (venv) vagrant@vagrant-ubuntu-trusty-64:/var/www/catalog/catalog$ service apache2 reload 
-And I receive this message * Reloading web server apache2                                                                                       * 
-
-HOWEVER, when I go to the http://52.89.36.246/ instead of seeting my __init_.py I see  Apache2 Ubuntu Default Page
-
-also : sudo a2ensite catalog
-
-
-Also when I try to connect SSH: ssh -i ~/.ssh/Users/alirezabeig/ root@52.89.36.246 : I receive this error _>Warning: Identity file /Users/alirezabeig/.ssh/Users/alirezabeig.rsa not accessible: No such file or directory.
-root@52.89.36.246: Permission denied (publickey).
-MY PWD is :/Users/alirezabeig/final project
-
-
-Add user: 
-
-Sudo adduser grader
-password: qwerasdzx
-
-One error I receive after running :  ssh grader@52.89.36.246 -p 2222  --> It times out! 
-
-Create : To create the public and private SSH keys on the command-line:
-mkdir ~/.ssh
-chmod 700 ~/.ssh
-ssh-keygen -t rsa
-
-Where the public key is ---/home/vagrant/.ssh/Final_P.rsa
-
-Where the error happens :
-run this command : ssh -i ~/.ssh/Final_P.rsa root@52.89.36.246
-Error:Permission denied (publickey).
-
-
+Make sure no remote connections to the database are allowed. Check if the contents of this file sudo nano /etc/postgresql/9.3/main/pg_hba.conf looks like this:
+local   all             postgres                                peer
+local   all             all                                     peer
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
+Restart Apache
+sudo service apache2 restart
