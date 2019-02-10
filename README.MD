@@ -101,10 +101,4 @@ exit
 Change create engine line in your __init__.py and Database_set_Finalprject.py to: engine = create_engine('postgresql://Item_catalog-:password@localhost/Item_catalog-')
 python /var/www/Item_catalog-/Item_catalog-/Database_set_Finalproject.py
 
-Make sure no remote connections to the database are allowed. Check if the contents of this file sudo nano /etc/postgresql/9.3/main/pg_hba.conf looks like this:
-local   all             postgres                                peer
-local   all             all                                     peer
-host    all             all             127.0.0.1/32            md5
-host    all             all             ::1/128                 md5
-Restart Apache
 sudo service apache2 restart
