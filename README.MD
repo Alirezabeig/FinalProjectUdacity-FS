@@ -90,9 +90,9 @@ sudo apt-get install postgresql postgresql-contrib
 sudo su - postgres
 psql
 
-CREATE USER catalog WITH PASSWORD 'password';
-ALTER USER catalog CREATEDB;
-CREATE DATABASE Item_catalog- WITH OWNER catalog;
+CREATE USER Item_catalog- WITH PASSWORD 'password';
+ALTER USER Item_catalog- CREATEDB;
+CREATE DATABASE Item_catalog- WITH OWNER Item_catalog-;
 \c Item_catalog-
 REVOKE ALL ON SCHEMA public FROM public;
 GRANT ALL ON SCHEMA public TO Item_catalog-;
